@@ -8,12 +8,10 @@ const APP = {
     init: () => {
         document.querySelector("#btnSearch").addEventListener('click', SEARCH.getData);
         document.querySelector('#actors .content').addEventListener('click', ACTORS.pickActor);
-        //ACTORS
-        //click listener on #actors .content to handle when the user selects an actor
+        document.querySelector('#backBtn').style.display = 'none';
     },
 };
 
-//search is for anything to do with the fetch api
 const SEARCH = {
     results: [],
     getData(ev) {
@@ -33,8 +31,6 @@ const SEARCH = {
                     }
                 })
                 .then((data) => {
-                    //SEARCH.results = data.results;
-                    //NAV.switchPage('actors');
                     console.log(data.results);
                     ACTORS.buildActors(data.results);
                 })
@@ -45,14 +41,14 @@ const SEARCH = {
         }
     },
 };
-//use fetch
 
-//actors is for changes connected to content in the actors section
 const ACTORS = {
     buildActors(results) {
         let content = document.querySelector("section#actors div.content");
         document.querySelector('p').setAttribute('id', 'instructions-Off');
         document.getElementById("actors").style.display = 'flex';
+
+
         let df = document.createDocumentFragment();
         SEARCH.results = results;
 
@@ -60,7 +56,7 @@ const ACTORS = {
             let card = document.createElement('div');
             let img = document.createElement('img');
             let imgDiv = document.createElement('figure');
-            let name = document.createElement('h3');
+            let name = document.createElement('h2');
             let pop = document.createElement('p');
 
             imgDiv.className = "imgDiv";
@@ -71,38 +67,32 @@ const ACTORS = {
             if (person.profile_path == null) {
                 img.src = "#";
                 img.alt = "Image not found";
-            } else { //build each actor card
+            } else {
                 card.className = "actor-card";
                 card.setAttribute('id', person.id);
-
                 img.src = APP.IMG_URL + 'w500' + person.profile_path;
-                img.alt = person.name;
-
+                img.alt = "actor";
                 imgDiv.append(img);
                 card.append(imgDiv, name, pop);
                 df.append(card);
-                console.log("hi");
             }
             card.addEventListener('click', MEDIA.showMedia);
         });
-        //content.innerHTML = "";
         content.append(df);
     },
 }
-//media is for changes connected to content in the media section
+
 const MEDIA = {
     showMedia(ev) {
         let card = ev.currentTarget;
         let id = card.getAttribute('id');
         let content = document.querySelector("section#media div.content");
-
         let actors = document.getElementById("actors");
-        console.log(actors);
         actors.style.display = 'none';
 
-        //document.getElementById("actor-card").style.display = 'none';
-
         document.getElementById("media").style.display = 'flex';
+        document.querySelector("#backBtn").style.display = 'flex';
+
         let df = document.createDocumentFragment();
 
         SEARCH.results.forEach(person => {
@@ -111,23 +101,22 @@ const MEDIA = {
                     let cardDiv = document.createElement('div');
                     let movie_img = document.createElement('img');
                     let imgDiv = document.createElement('figure');
-                    let title = document.createElement('p');
+                    let title = document.createElement('h2');
                     let rel_date = document.createElement('p');
                     let overview = document.createElement('p');
                     let vote_avg = document.createElement('p');
 
                     cardDiv.className = "media-card";
-                    //imgDiv.className = item.title
+                    imgDiv.className = "img-card";
                     movie_img.src = APP.IMG_URL + 'w500' + item.poster_path;
                     movie_img.alt = item.name;
-
                     title.textContent = item.title;
                     rel_date.textContent = "Release Date" + item.release_date;
 
                     if (item.overview == null || item.overview == 0) {
                         overview.textContent = "Error: Overview Unavailable"
-                    } else if (item.overview.length > 240) {
-                        overview.textContent = item.overview.substring(0, 275) + '...';
+                    } else if (item.overview.length > 300) {
+                        overview.textContent = item.overview.substring(0, 300) + '...';
                     } else {
                         overview.textContent = item.overview;
                     }
@@ -135,31 +124,25 @@ const MEDIA = {
                     vote_avg.textContent = "Voter Average: " + item.vote_average;
 
                     imgDiv.append(movie_img);
-                    card.append(imgDiv, title, rel_date, overview, vote_avg);
-                    df.append(card);
+                    cardDiv.append(imgDiv, title, rel_date, overview, vote_avg);
+                    content.append(cardDiv);
+                    df.append(cardDiv);
 
-                    
                 });
-            } 
+            }
         });
         content.append(df);
-        card.removeEventListener('click', MEDIA.showMedia);
+
+        document.querySelector("#backBtn").addEventListener('click', (ev) => {         //handle back button
+            ev.preventDefault();
+            actors.style.display = "flex";
+            card.addEventListener('click', MEDIA.showMedia);
+            content.innerHTML = "";
+            document.querySelector('#backBtn').style.display = 'none';
+        });
+
     },
+
 };
 
 document.addEventListener('DOMContentLoaded', APP.init);
-
-//storage is for working with localstorage
-// const STORAGE = {
-//   //this will be used in Assign 4
-// };
-
-//nav is for anything connected to the history api and location
-// const NAV = {
-//     swichPage(page) {
-//         //when the app loads...
-//         // history.replaceState({}, null, '/');
-//     },
-//     //this will be used in Assign 4
-// };
-

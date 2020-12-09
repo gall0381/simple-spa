@@ -52,7 +52,7 @@ header img {
     justify-content: center;
     align-items: center;
     margin: 4rem 4rem;
-    margin-bottom: 0;
+    margin-bottom: 2rem;
     margin-top: 5rem;
 }
 
@@ -70,18 +70,17 @@ body {
 .instructions p {
     text-align: center;
     color: white;
-    margin: 1rem;
+    margin: 2rem;
 }
 
 #actors h3 {
     text-align: right;
     color: white;
-    margin: 0;
     
 }
 
 #actors p {
-    text-align: right;
+    text-align: left;
     color: white;
     
 }
@@ -89,17 +88,9 @@ body {
 #btnSearch .iconic {
     height: 18px;
     width: 22px;
+    margin-left: -2.2rem;
 }
 
-#btnSearch.pulse {
-    animation-name: pulse;
-    animation-duration: 2s;
-    animation-timing-function: linear;
-    animation-delay: 0;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-fill-mode: backwards;
-}
 
 #btnSearch {
     border-radius: 0.5rem;
@@ -111,7 +102,7 @@ body {
 #back {
     height: 2rem;
     width: 2rem;
-    margin: 1.75rem;
+    
 }
 
 #back-button {
@@ -143,15 +134,17 @@ body {
     flex-wrap: wrap;
 } */
 
-#actors h2, #instructions h2,
-#media h2 {
+#media h2,
+#actors h2 {
     font-weight: 200;
-    font-size: 2rem;
-    text-align: center;
+    font-size: 1.5rem;
+    text-align: left;
     color: hsl(20, 40%, 100%);
     padding: 1rem;
 }
-
+#media p {
+    font-size: .7rem;
+}
 #input {
     height: 3rem;
     font-size: 1.2rem;
@@ -168,7 +161,7 @@ body {
 }
 
 .content {
-    width: 70%;
+    width: 30rem;
     background-color: rgb(13, 37, 63);
     justify-content: center;
     align-items: flex-start;
@@ -181,18 +174,19 @@ body {
 .actor-card {
     background-image: linear-gradient(rgb(13, 37, 63), rgb(75, 94, 72));
     color: white;
-    padding: 1rem;
+    padding: .5rem;
     border-radius: 20px;
-    width: 25rem;
+    width: 30rem;
     margin: 0.7rem auto;
     position: flex;
 }
 
 .actor-card img {
     float: left;
-    width: 25%;
+    width: 40%;
     height: auto;
     display: flex;
+    padding: 1rem;
 }
 
 .actor-card> p {
@@ -202,6 +196,24 @@ body {
     line-height: 1.2rem
 }
 
+.media-card {
+    background-image: linear-gradient(rgb(13, 37, 63), rgb(75, 94, 72));
+    color: white;
+    padding: 1rem;
+    border-radius: 20px;
+    width: 30rem;
+    font-size: 16px;
+    margin: 1rem auto;
+    position: flex;
+}
+
+.img-card img {
+    float: left;
+    padding: .5rem .5rem;
+    width: 50%;
+    height: auto;
+    display: flex;
+}
 @media (min-width: 480px) {}
 body {
     content: "meduim";

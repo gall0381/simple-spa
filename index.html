@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Movie SPA</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="./js/iconic.min.js"></script>
+    <script src="./js/main.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <img src="./img/blue_long_1-8ba2ac31f354005783fab473602c34c3f4fd207150182061e425d366e4f34596.svg"
+            alt="TMDB-logo">
+        <form>
+            <input type="search" id="search" value="" placeholder="Search Actor" />
+            <button id="btnSearch" class="pulse"><img data-src="./img/magnifying-glass.svg" class="iconic"/></button>
+            <button id="back" class="pulse"><img id="back-button" data-src="./img/arrow_back-24px.svg" class="iconic"alt="Back Button" title="back" /></button>
+        </form>
+    </header>
+
+    <main>
+        <section class="instructions">
+            <p>Use the search bar located above to search for you favourite actors and shows</p>
+            <p>Click on an actor for more info on their work</p>
+        </section>
+        <section id="actors">
+            <div class="content">
+            </div>
+        </section>
+        <section id="media">
+            <div class="content"></div>
+        </section>
+
+
+        <footer>
+            <a href="https://www.themoviedb.org"><img
+                    src="./img/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg"
+                    alt="The Movie DB" /></a>
+        </footer>
+
+    </main>
+</body>
+
+</html>

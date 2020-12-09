@@ -7,7 +7,6 @@ const APP = {
     IMG_URL: 'https://image.tmdb.org/t/p/',
     init: () => {
         document.querySelector("#btnSearch").addEventListener('click', SEARCH.getData);
-        document.querySelector('#actors .content').addEventListener('click', ACTORS.pickActor);
         document.querySelector('#backBtn').style.display = 'none';
     },
 };
@@ -41,29 +40,29 @@ const SEARCH = {
         }
     },
 };
-
 const ACTORS = {
     buildActors(results) {
         let content = document.querySelector("section#actors div.content");
         document.querySelector('p').setAttribute('id', 'instructions-Off');
-        document.getElementById("actors").style.display = 'flex';
-
-
+        let act_page = document.getElementById("actors");
+        content.innerHTML = ""; 
+        act_page.style.display = 'flex';
+        
         let df = document.createDocumentFragment();
         SEARCH.results = results;
-
+        
         SEARCH.results.forEach(person => {
             let card = document.createElement('div');
             let img = document.createElement('img');
             let imgDiv = document.createElement('figure');
             let name = document.createElement('h2');
             let pop = document.createElement('p');
-
+            
             imgDiv.className = "imgDiv";
             name.className = "actor-name";
             name.textContent = person.name;
             pop.textContent = "Popularity rating: " + person.popularity;
-
+            
             if (person.profile_path == null) {
                 img.src = "#";
                 img.alt = "Image not found";

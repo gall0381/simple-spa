@@ -6,6 +6,8 @@ const APP = {
     MAIN_URL: "https://api.themoviedb.org/3/",
     IMG_URL: 'https://image.tmdb.org/t/p/',
     init: () => {
+        window.addEventListener("hashchange", NAV.hc);
+        window.addEventListener("popstate", NAV.ps);
         document.querySelector("#btnSearch").addEventListener('click', SEARCH.getData);
         document.querySelector('#backBtn').style.display = 'none';
     },
@@ -32,10 +34,11 @@ const SEARCH = {
                 .then((data) => {
                     console.log(data.results);
                     ACTORS.buildActors(data.results);
+                    STORAGE.toLocalStorage();
+                    MODAL.overlay();
                 })
                 .catch((err) => {
-                    alert(err);
-
+                    alert("ATTENTION: Failed to Fetch. " + err);
                 });
         }
     },
@@ -45,24 +48,24 @@ const ACTORS = {
         let content = document.querySelector("section#actors div.content");
         document.querySelector('p').setAttribute('id', 'instructions-Off');
         let act_page = document.getElementById("actors");
-        content.innerHTML = ""; 
+        content.innerHTML = "";
         act_page.style.display = 'flex';
-        
+        document.querySelector('.progress').style.display = 'flex';  
         let df = document.createDocumentFragment();
         SEARCH.results = results;
-        
+
         SEARCH.results.forEach(person => {
             let card = document.createElement('div');
             let img = document.createElement('img');
             let imgDiv = document.createElement('figure');
             let name = document.createElement('h2');
             let pop = document.createElement('p');
-            
+
             imgDiv.className = "imgDiv";
             name.className = "actor-name";
             name.textContent = person.name;
             pop.textContent = "Popularity rating: " + person.popularity;
-            
+
             if (person.profile_path == null) {
                 img.src = "#";
                 img.alt = "Image not found";
@@ -76,9 +79,25 @@ const ACTORS = {
                 df.append(card);
             }
             card.addEventListener('click', MEDIA.showMedia);
+
+            let nameArray = [SEARCH.results];
+            console.log(nameArray);
+
         });
         content.append(df);
+        document.querySelector('.sortButtons').style.display = 'block';
+        document.querySelector('.progress').style.display = 'none';  
+
     },
+
+    // sortButtons(){
+    //     let sort = document.querySelector('sortBtn');
+    //     document.getElementById("sortBtn").addEventListener('click', (ev) => {
+    //         ev.preventDefault();
+    //         actors.style.display = "flex";
+    //         sort.addEventListener('click', SEARCH.results.sort());
+    //     });
+    // }
 }
 
 const MEDIA = {
@@ -142,6 +161,71 @@ const MEDIA = {
 
     },
 
+};
+
+const STORAGE = {
+    toLocalStorage(val) {
+        val = document.getElementById('search').value;
+        localStorage.setItem('actorSearched-' + JSON.stringify(val), JSON.stringify(SEARCH.results));
+    }
+};
+
+const NAV = {
+    hc(ev) {
+        console.log(show("hashchange"));
+
+    },
+
+    ps(ev) {
+        show("popstate");
+    }
+
+
+};
+
+const MODAL = {
+    overlay() {
+        showModal = (ev) => {
+            ev.preventDefault();
+            let modal = document.querySelector('.modal');
+            modal.classList.remove('off');
+            modal.classList.add('on');
+            let message = `Redirect to the ${ev.target.textContent} page?`;
+            let p = document.querySelector('.message');
+            p.innerHTML = message;
+            console.log(`Redirecting to ${ev.target.textContent}...`)
+        }
+
+        showOverlay = (ev) => {
+            if (ev.target.className === "link") {
+                ev.preventDefault();
+                let overlay = document.querySelector('.overlay');
+                overlay.classList.remove('hide');
+                overlay.classList.add('show');
+                showModal(ev);
+            } else {
+                return;
+            }
+        }
+        
+        hideModal = (ev) => {
+            ev.preventDefault();
+            ev.stopPropagation();
+            let overlay = document.querySelector('.modal');
+            overlay.classList.remove('on');
+            overlay.classList.add('off');
+        }
+        
+        hideOverlay = (ev) => {
+            ev.preventDefault();
+            ev.stopPropagation();
+            let overlay = document.querySelector('.overlay');
+            overlay.classList.remove('show');
+            overlay.classList.add('hide');
+            hideModal(ev);
+        }
+
+    }
 };
 
 document.addEventListener('DOMContentLoaded', APP.init);

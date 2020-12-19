@@ -6,18 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simple Movie SPA</title>
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="./js/iconic.min.js"></script>
     <script src="./js/main.js" defer></script>
 </head>
 
 <body>
     <header>
+        <div class="overlay hide">&nbsp;</div>
+        <div class="modal off">
+
+        </div>
         <img src="./img/blue_long_1-8ba2ac31f354005783fab473602c34c3f4fd207150182061e425d366e4f34596.svg"
             alt="TMDB-logo">
         <form>
-            <input type="search" id="search" value="" placeholder="Search Actor" />
+            <input type="search" id="search" value="" placeholder="Search Actor" size="40"/>
             <button id="btnSearch" class="pulse"><img data-src="./img/magnifying-glass.svg" class="iconic"/></button>
             <button id="backBtn" class="pulse"><img id="back-button" data-src="./img/arrow_back-24px.svg" class="iconic"alt="Back Button" title="back" /></button>
+            
+            <div class="sortButtons">
+            <button id="nameSort">Sort by: Name</button>
+            <button id="popSort"> Sort by: Popularity</button>
+            </div>
+
+            <div class="progress container">
+                <div class="indeterminate"></div>
+            </div>
+            </div>
+
         </form>
     </header>
 
@@ -26,10 +42,12 @@
             <p>Use the search bar located above to search for you favourite actors and shows <br><br> Click on an actor for more info on their work</p>
         </section>
         <section id="actors">
+        <h2>Actors</h2>
             <div class="content">
             </div>
         </section>
         <section id="media">
+            <h2>Media</h2>
             <div class="content"></div>
         </section>
 

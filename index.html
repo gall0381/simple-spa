@@ -7,6 +7,7 @@
     <title>Simple Movie SPA</title>
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="./js/iconic.min.js"></script>
     <script src="./js/main.js" defer></script>
 </head>
@@ -20,29 +21,40 @@
         <img src="./img/blue_long_1-8ba2ac31f354005783fab473602c34c3f4fd207150182061e425d366e4f34596.svg"
             alt="TMDB-logo">
         <form>
-            <input type="search" id="search" value="" placeholder="Search Actor" size="40"/>
-            <button id="btnSearch" class="pulse"><img data-src="./img/magnifying-glass.svg" class="iconic"/></button>
-            <button id="backBtn" class="pulse"><img id="back-button" data-src="./img/arrow_back-24px.svg" class="iconic"alt="Back Button" title="back" /></button>
-            
+            <input type="search" id="search" value="" placeholder="Search Actor" size="40" />
+            <button id="btnSearch" class="pulse"><img data-src="./img/magnifying-glass.svg" class="iconic" /></button>
+            <button id="backBtn" class="pulse"><img id="back-button" data-src="./img/arrow_back-24px.svg" class="iconic"
+                    alt="Back Button" title="back" /></button>
+
             <div class="sortButtons">
-            <button id="nameSort">Sort by: Name</button>
-            <button id="popSort"> Sort by: Popularity</button>
+                <button id="nameSort">Sort by: Name</button>
+                <button id="popSort"> Sort by: Popularity</button>
+            </div>
+            <div class="preloader-wrapper small active">
+                <div class="spinner-layer spinner-green-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
             </div>
 
-            <div class="progress container">
-                <div class="indeterminate"></div>
-            </div>
-            </div>
 
         </form>
     </header>
 
     <main>
         <section class="instructions">
-            <p>Use the search bar located above to search for you favourite actors and shows <br><br> Click on an actor for more info on their work</p>
+            <p>Use the search bar located above to search for you favourite actors and shows <br><br> Click on an actor
+                for more info on their work</p>
         </section>
         <section id="actors">
-        <h2>Actors</h2>
+            <h2>Actors</h2>
             <div class="content">
             </div>
         </section>

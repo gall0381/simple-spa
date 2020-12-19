@@ -10,6 +10,7 @@ const APP = {
         window.addEventListener("popstate", NAV.ps);
         document.querySelector("#btnSearch").addEventListener('click', SEARCH.getData);
         document.querySelector('#backBtn').style.display = 'none';
+        document.querySelector('.preloader-wrapper').style.display = 'none';
     },
 };
 
@@ -22,6 +23,8 @@ const SEARCH = {
         let url = `${APP.MAIN_URL}search/person?api_key=${APP.API_KEY}&query=${search}&language=en-US&page=1`
         if (search) {
             url += search;
+
+            document.querySelector('.preloader-wrapper').style.display = 'flex';
 
             fetch(url)
                 .then((resp) => {
@@ -44,13 +47,39 @@ const SEARCH = {
     },
 };
 const ACTORS = {
+
+    doSort(){
+        document.querySelector('#nameSort').addEventListener('click', ACTORS.doSort);
+        document.querySelector('#popSort').addEventListener('click', ACTORS.doSort);
+        let searchArr = SEARCH.results;
+        let sortArr = Arr.from(searchArr);
+        let clicked = ev.target;
+        let nameS = document.querySelector('#nameSort');
+        let popS = document.querySelector('#popSort');
+
+        if (nameS === clicked){
+            var choice = "popularity";
+        } else {
+            var choice = "name";
+        }
+
+        sortArr.sort(function (a, b) {
+            if (a[choice] > b[choice]) {
+                return 1;
+            } else if (b[choice] > a[choice]){
+                return -1;
+            } else {
+                return 0;
+            }
+        })
+    },
+
     buildActors(results) {
         let content = document.querySelector("section#actors div.content");
         document.querySelector('p').setAttribute('id', 'instructions-Off');
         let act_page = document.getElementById("actors");
         content.innerHTML = "";
         act_page.style.display = 'flex';
-        document.querySelector('.progress').style.display = 'flex';  
         let df = document.createDocumentFragment();
         SEARCH.results = results;
 
@@ -86,18 +115,9 @@ const ACTORS = {
         });
         content.append(df);
         document.querySelector('.sortButtons').style.display = 'block';
-        document.querySelector('.progress').style.display = 'none';  
+        document.querySelector('.preloader-wrapper').style.display = 'none';
 
     },
-
-    // sortButtons(){
-    //     let sort = document.querySelector('sortBtn');
-    //     document.getElementById("sortBtn").addEventListener('click', (ev) => {
-    //         ev.preventDefault();
-    //         actors.style.display = "flex";
-    //         sort.addEventListener('click', SEARCH.results.sort());
-    //     });
-    // }
 }
 
 const MEDIA = {
@@ -207,7 +227,7 @@ const MODAL = {
                 return;
             }
         }
-        
+
         hideModal = (ev) => {
             ev.preventDefault();
             ev.stopPropagation();
@@ -215,7 +235,7 @@ const MODAL = {
             overlay.classList.remove('on');
             overlay.classList.add('off');
         }
-        
+
         hideOverlay = (ev) => {
             ev.preventDefault();
             ev.stopPropagation();
